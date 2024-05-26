@@ -1,0 +1,18 @@
+.form-item {
+    padding: 5px;
+    max-width: 300px;
+}
+
+ion-radio-group{
+    display: block;
+}
+ion-radio {
+    // display: inline-grid;
+    padding: 10px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

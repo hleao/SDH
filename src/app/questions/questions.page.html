@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Questions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">questions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <div *ngFor="let item of questionnaire.item" class="form-item"> 
+      {{item.text}} : 
+      <ng-container [ngSwitch]="item.type">
+        <ng-container *ngSwitchCase="'boolean'">
+          <ion-radio-group [(ngModel)]="data[item.linkId]">
+            <ion-radio labelPlacement="end" value="Yes">Yes</ion-radio>
+            <ion-radio labelPlacement="end" value="No">No</ion-radio>
+          </ion-radio-group>
+        </ng-container>
+        <ng-container *ngSwitchCase="'choice'">
+          <ion-select label-placement="stacked" [(ngModel)]="data[item.linkId]">
+            <ion-select-option *ngFor="let option of item.option"> {{ option.valueCoding.display }}</ion-select-option>
+          </ion-select>
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+          <ion-label position="stacked"></ion-label>
+          <ion-input value="{{ data[item.linkId] | date: 'dd MMM yyyy' }}" value="" id="date"></ion-input>
+          <ion-popover trigger="date" >
+              <ng-template>
+                  <ion-datetime [(ngModel)]="data[item.linkId]" presentation="date"></ion-datetime>
+              </ng-template>
+          </ion-popover>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'string'">
+          <ion-input [(ngModel)]="data[item.linkId]"></ion-input>
+        </ng-container>
+    </ng-container>
+    </div>
+
+    <ion-button (click)="save()">Save</ion-button>
+  </div>
+</ion-content>
